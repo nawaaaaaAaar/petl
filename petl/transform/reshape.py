@@ -576,7 +576,8 @@ class PivotView(Table):
             self.source = source
         else:
             rowfields = tuple(f1) if isinstance(f1, (list, tuple)) else (f1,)
-            self.source = sort(source, key=rowfields + (f2,), buffersize=buffersize,
+            sortfields = rowfields if f2 in rowfields else rowfields + (f2,)
+            self.source = sort(source, key=sortfields, buffersize=buffersize,
                                tempdir=tempdir, cache=cache)
         self.f1, self.f2, self.f3 = f1, f2, f3
         self.aggfun = aggfun
