@@ -717,6 +717,14 @@ def test_pivot_headerless():
             pass
 
 
+def test_pivot_compound_row_key_includes_column_field():
+    table = [('city', 'kind', 'value'), ('B', 'Y', 1), ('A', 'X', 2),
+             ('A', 'Y', 3), ('A', 'X', 4)]
+    result = pivot(table, ['city', 'kind'], 'kind', 'value', sum, missing=0)
+    ieq([('city', 'kind', 'X', 'Y'), ('A', 'X', 6, 0),
+         ('A', 'Y', 0, 3), ('B', 'Y', 0, 1)], result)
+
+
 def test_flatten():
 
     table1 = (('foo', 'bar', 'baz'),
